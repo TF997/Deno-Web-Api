@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<meta name="viewport" content="width=device-width", initial-scale="1.0" />
+		<title >Domestic Repairs</title>
+		<link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.2/dist/terminal.min.css" />
+		<link rel="stylesheet" href="style/main.css">
+		<script type="module" src="./router.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.3/showdown.min.js" integrity="sha512-vx8rJNrYIZPDr290AV2tL04x0CKjLHSnTXrHMeb1kqbhfGwBnclPDOWIWxRiVS6Oe1oGzk5MzNz/eLzVku30kg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	</head>
+	<body>
+		<header>
+			<h1 class="logo terminal-prompt">Domestic Repairs</h1>
+			<h2>&nbsp;</h2>
+			<p>&nbsp;</p>
+		</header>
+		<nav>
+			<ul class="grid grid-flow-col text-center text-gray-500 bg-gray-100 rounded-full p-1">
+				<li><a name="home" href="/" >Home</a></li>
+				<li><a name="register" href="/register" >Register</a></li>
+				<li><a name="workAvailable" href="/workAvailable" >Work Available</a></li>
+				<li><a name="myJobs" href="/myJobs" >My Jobs</a></li>
+				<li><a name="newJob" href="/newJob" >New Issue</a></li>
+				<li><a name="login" href="/login" >Log in</a></li>
+				<li><a name="logout" href="/logout">Log out</a></li>
+			</ul>
+		</nav>
+		<aside class="hidden"><p></p></aside>
+		<main>
+			<article>
+			</article>
+		</main>
+		<footer>
+			<p>&nbsp;</p>
+		</footer>
+	</body>
+	<template id="home">
+	</template>
+	<template id="workAvailable">
+	</template>
+	<template id="details">
+	</template>
+	<template id="login">
+		<form name="login">
+			<p><label for="email">Username</label><br /><input type="text" name="user" placeholder="username" /></p>
+			<p><label for="pass">Password</label><br /><input type="password" name="pass" placeholder="password" /></p>
+			<p><button type="submit">Log in</button></p>
+		</form>
+	</template>
+	<template id="register">
+		<form name="register">
+			<p><label for="name">Username</label><br /><input type="text" name="name" placeholder="full name" /></p>
+			<p><label for="pass">Password</label><br /><input type="password" name="pass" placeholder="password" /></p>
+			<p><label for="role">User Role: </label>
+				<select name="role" id="role">
+				<option>Customer</option>
+				<option>Technician</option>
+				</select>
+			<p>
+			<p><button type="submit">Create account</button></p>
+		</form>
+	</template>
+	<template id="logout">
+			<p>Do you want to log out?</p>
+			<p><button>OK</button><button>Cancel</button></p>
+	</template>
+	<template id="quote">
+		<section>
+			<h2></h2>
+			<p></p>
+		</section>
+	</template>
+	<template id="newJob">
+	</template>
+	<template id="addJob">
+		<form name='addJob'>
+			<fieldset>
+				<legend>New Job</legend>
+				<p><label for="appliance">Type Of Appliance: </label>
+					<select name="appliance" id="appliance">
+					<option>Select Appliance</option>
+					</select>
+				<p>
+				<p><label for="applianceManufacturer">Manufacturer Of Appliance: </label>
+					<select name="manufacturer" id="manufacturer">
+					<option>Select Manufacturer</option>
+					</select>
+				<p>
+					<label for="age">Age Of Appliance: </label>
+					<input type="range" min="1" max="10" value="5" class="slider" id="age" name="age" oninput="this.nextElementSibling.value = this.value"/>
+					<output>5</output> Years Old
+				</p>
+				<p><label for="shortDesc">Short Description Of Issue (100 Characters): </label><input type="text" maxlength='100' name="shortDesc" placeholder="Short one line description of the issue." /></p>
+				<label for="longDesc">Description Of Issue: </label><br/><textarea rows = "5" cols = "60" id=longDesc name=longDesc placeholder="Multi-line description (Markdown enabled)"></textarea>
+				<article id=markup></article>
+				<p>
+					<label for="pay">Pay Amount: </label>
+					<input type="range" min="1" max="200" value="100" class="slider" id="pay" name="pay" oninput="this.nextElementSibling.value = this.value"/>
+					£<output>100</output>.00
+				</p>
+				<input type="hidden" name="lat" id=lat></input>
+				<input type="hidden" name="lon" id=lon></input>
+				<p><button type="submit" class="btn btn-error" disabled>Acquiring Location...</button></p>
+			</fieldset>
+		</form>
+		<script src="markdown.js"></script>
+	</template>
+	<template id=jobs>
+		<br/>
+		<section class="terminal-card">
+			<header name="summary"></header>
+			<section>
+				<p name="userlocation"></p>
+				<p name="distance"></p>
+				<p name="applianceType"></p>
+				<p name="date"></p>
+				<p name="status"></p>
+				<p name="payment"></p>
+			</section>
+		</section>
+	</template>
+	<template id=jobsAvailable>
+		<br/>
+		<section class="terminal-card">
+			<header name="summary"></header>
+			<section>
+				<p name="userlocation"></p>
+				<p name="distance"></p>
+				<p name="applianceType"></p>
+				<p name="date"></p>
+				<p name="status"></p>
+				<p name="payment"></p>
+				<form>
+					<input type="hidden" name="id"> </p>
+					<button type="submit" name="details"> details </button> 
+				</form>
+			</section>
+		</section>
+	</template>
+	<template id=job>
+		<section>
+			<p name="id"></p>
+			<p name="shortDescription"></p>
+			<p name="longDescription" hidden></p>
+			<article id=markup></article>
+			<p name="payment"></p>
+			<p name="userlocation"></p>
+			<p name="distance"></p>
+			<p name="loggedtime"></p>
+			<p name="username"></p>
+			<p name="jobstatus"></p>
+			<p name="appliance"></p>
+			<p name="age"></p>
+			<p name="manufacturer"></p>
+		</section>
+		<button type="button" name="accept"> Accept </button>	
+		<button type="button" name="decline"> Decline </button> 
+		<button type="button" name="cancel"> Cancel </button>
+		<script src="markdown.js"></script>
+	</template>
+	<template id=pagination>
+		<section class="btn-group">
+			<button name="prev">Previous Page</button>
+			<button name="next">Next Page</button>
+		</section>
+	</template>
+</html>
